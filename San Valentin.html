@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentin</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffe5e5;
+}
+
+.container {
+    display: none; /* ocultamos por defecto */
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+    max-width: 500px;
+    margin: 20px;
+}
+
+.container.active {
+    display: flex; /* solo el activo se muestra */
+}
+
+.container .tenor-gif-embed {
+    display: flex;
+    max-width: 200px;
+}
+
+.container .btn {
+    display: flex;
+    gap: 25px;
+}
+
+.btn a {
+    text-decoration: none;
+    color: #111;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0.5rem 1rem 3rem hsl(0,0,0,0.3);
+}  
+    </style>
+</head>
+<body>
+    <!-- PANTALLA 1 (PRINCIPAL) -->
+    <div class="container active" id="step0">
+        <div class="tenor-gif-embed" data-postid="16432274556535966135" data-share-method="host" data-aspect-ratio="1.22302" data-width="100%"></div>
+        <h1>¿Te gustaría salir conmigo?</h1>
+        <div class="btn">
+            <a href="#" class="yes-btn">SI</a>
+            <a href="#" class="no-btn">NO</a>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2 -->
+    <div class="container" id="step1">
+        <div class="tenor-gif-embed" data-postid="6109137816603623565" data-share-method="host" data-aspect-ratio="1.25962" data-width="100%"></div>
+        <h1>Piensalo bien...</h1>
+        <div class="btn">
+            <a href="#" class="yes-btn">SI</a>
+            <a href="#" class="no-btn">NO</a>
+        </div>
+    </div>
+
+    <!-- PANTALLA 3 -->
+    <div class="container" id="step2">
+        <div class="tenor-gif-embed" data-postid="25406345" data-share-method="host" data-aspect-ratio="1" data-width="100%"></div>
+        <h1>Serás mía por las buenas o por las malas</h1>
+        <div class="btn">
+            <a href="#" class="yes-btn">SI</a>
+            <a href="#" id="random-btn" class="no-btn">NO</a>
+        </div>
+    </div>
+
+    <!-- PANTALLA FINAL -->
+    <div class="container" id="step3">
+        <div class="tenor-gif-embed" data-postid="11148960167379989894" data-share-method="host" data-aspect-ratio="1" data-width="100%"></div>
+        <h1>HEHEHEHE lo sabía!!!</h1>
+    </div>
+
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    <script>
+        const containers = document.querySelectorAll(".container");
+        let currentStep = 0;
+
+        function showStep(step) {
+            containers.forEach((c, i) => {
+                c.classList.toggle("active", i === step);
+            });
+        }
+
+        // SI → salta al paso final (última pantalla)
+        document.querySelectorAll(".yes-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                showStep(3); // índice 3 = step3 (final)
+            });
+        });
+
+        // NO → avanza paso a paso
+        document.querySelectorAll(".no-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                currentStep++;
+                if (currentStep < containers.length - 1) { 
+                    showStep(currentStep);
+                }
+            });
+        });
+
+        // Botón NO que se mueve en la pantalla 3
+        const btnRandom = document.querySelector("#random-btn");
+        if (btnRandom) {
+            btnRandom.addEventListener("mouseenter", function(e) {
+                e.target.style.fontWeight = "bolder";
+                e.target.style.position = "absolute";
+                e.target.style.top = Math.floor(Math.random() * 90 + 5) + "%";
+                e.target.style.left = Math.floor(Math.random() * 90 + 5) + "%";
+            });
+        }
+    </script>
+</body>
+</html>
